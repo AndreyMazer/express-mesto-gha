@@ -1,7 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const router = require("./routes/index");
-//const bodyParser = require("body-parser");
+const bodyParser = require("body-parser");
 const { PORT = 3000 } = process.env;
 
 mongoose.connect("mongodb://127.0.0.1/mestodb", {
