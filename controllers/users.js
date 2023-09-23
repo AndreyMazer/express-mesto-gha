@@ -3,7 +3,6 @@ const {
   ERROR_VALIDATION,
   ERROR_NOT_FOUND,
   ERROR_SERVER,
-  SUCCESSFUL_ANSWER,
 } = require("../errors/errors");
 
 const getAllUsers = (req, res) => {
@@ -49,7 +48,7 @@ const createUser = (req, res) => {
   const { name, about, avatar } = req.body;
   User.create({ name, about, avatar })
     .then((user) => {
-      res.status(SUCCESSFUL_ANSWER).send(user);
+      res.send(user);
     })
     .catch((err) => {
       if (err.name === "ValidationError") {
