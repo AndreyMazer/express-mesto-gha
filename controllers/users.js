@@ -1,9 +1,10 @@
-const User = require('../models/user');
+const User = require("../models/user");
 const {
   ERROR_VALIDATION,
   ERROR_NOT_FOUND,
   ERROR_SERVER,
-} = require('../errors/errors');
+  SUCCESSFUL_ANSWER,
+} = require("../errors/errors");
 
 const getAllUsers = (req, res) => {
   User.find({})
@@ -11,35 +12,25 @@ const getAllUsers = (req, res) => {
       res.send(users);
     })
     .catch((err) => {
-      if (err.name === 'ValidationError') {
-        res
-          .status(ERROR_VALIDATION)
-          .send({ message: 'Введены некорректные данные' });
-      } else {
-        res
-          .status(ERROR_SERVER)
-          .send({ message: 'Ошибка сервера' });
-      }
+      res.status(ERROR_SERVER).send({ message: "Ошибка сервера" });
     });
 };
 
 const getUser = (req, res) => {
   User.findId(req.params.userId)
-    .orFail(() => new Error('NotFoundError'))
+    .orFail(() => new Error("NotFoundError"))
     .then((user) => {
       res.send(user);
     })
     .catch((err) => {
-      if (err.name === 'CastError') {
+      if (err.name === "CastError") {
         res
           .status(ERROR_VALIDATION)
-          .send({ message: 'Введены некорректные данные' });
-      } else if (err.message === 'NotFoundError') {
-        res.status(ERROR_NOT_FOUND).send({ message: 'Пользователь не найден' });
+          .send({ message: "Введены некорректные данные" });
+      } else if (err.message === "NotFoundError") {
+        res.status(ERROR_NOT_FOUND).send({ message: "Пользователь не найден" });
       } else {
-        res
-          .status(ERROR_SERVER)
-          .send({ message: 'Ошибка сервера' });
+        res.status(ERROR_SERVER).send({ message: "Ошибка сервера" });
       }
     });
 };
@@ -48,17 +39,15 @@ const createUser = (req, res) => {
   const { name, about, avatar } = req.body;
   User.create({ name, about, avatar })
     .then((user) => {
-      res.send(user);
+      res.status(SUCCESSFUL_ANSWER).send(user);
     })
     .catch((err) => {
-      if (err.name === 'ValidationError') {
+      if (err.name === "ValidationError") {
         res
           .status(ERROR_VALIDATION)
-          .send({ message: 'Введены некорректные данные' });
+          .send({ message: "Введены некорректные данные" });
       } else {
-        res
-          .status(ERROR_SERVER)
-          .send({ message: 'Ошибка сервера' });
+        res.status(ERROR_SERVER).send({ message: "Ошибка сервера" });
       }
     });
 };
@@ -68,22 +57,19 @@ const updateProfile = (req, res) => {
   User.findAndUpdate(
     req.user._id,
     { name, about },
-    { new: true, runValidators: true },
+    { new: true, runValidators: true }
   )
-    .orFail(() => new Error('NotFoundError'))
+    .orFail(() => new Error("NotFoundError"))
     .then((user) => {
       res.send(user);
     })
     .catch((err) => {
-      if (err.name === 'ValidationError') {
-        res
-          .status(ERROR_VALIDATION);
-      } else if (err.message === 'NotFoundError') {
-        res.status(ERROR_NOT_FOUND).send({ message: 'Пользователь не найден' });
+      if (err.name === "ValidationError") {
+        res.status(ERROR_VALIDATION);
+      } else if (err.message === "NotFoundError") {
+        res.status(ERROR_NOT_FOUND).send({ message: "Пользователь не найден" });
       } else {
-        res
-          .status(ERROR_SERVER)
-          .send({ message: 'Ошибка сервера' });
+        res.status(ERROR_SERVER).send({ message: "Ошибка сервера" });
       }
     });
 };
@@ -93,23 +79,21 @@ const updateAvatar = (req, res) => {
   User.findAndUpdate(
     req.user._id,
     { avatar },
-    { new: true, runValidators: true },
+    { new: true, runValidators: true }
   )
-    .orFail(() => new Error('NotFoundError'))
+    .orFail(() => new Error("NotFoundError"))
     .then((user) => {
       res.send(user);
     })
     .catch((err) => {
-      if (err.name === 'ValidationError') {
+      if (err.name === "ValidationError") {
         res
           .status(ERROR_VALIDATION)
-          .send({ message: 'Введены некорректные данные' });
-      } else if (err.message === 'NotFoundError') {
-        res.status(ERROR_NOT_FOUND).send({ message: 'Пользователь не найден' });
+          .send({ message: "Введены некорректные данные" });
+      } else if (err.message === "NotFoundError") {
+        res.status(ERROR_NOT_FOUND).send({ message: "Пользователь не найден" });
       } else {
-        res
-          .status(ERROR_SERVER)
-          .send({ message: 'Ошибка сервера' });
+        res.status(ERROR_SERVER).send({ message: "Ошибка сервера" });
       }
     });
 };
