@@ -1,11 +1,15 @@
-const ERROR_VALIDATION = 400;
-const ERROR_NOT_FOUND = 404;
-const ERROR_SERVER = 500;
-const SUCCESSFUL_ANSWER = 201;
+const ValidationError = require("./validationError");
+const UnauthorizedError = require("./unauthorizedError");
+const ForbiddenError = require("./forbiddenError");
+const NotFoundError = require("./notFoundError");
+const ConflictError = require("./conflictError");
+const ServerError = require("./serverError");
 
 module.exports = {
-  ERROR_VALIDATION,
-  ERROR_NOT_FOUND,
-  ERROR_SERVER,
-  SUCCESSFUL_ANSWER,
+  ValidationError,
+  UnauthorizedError,
+  ForbiddenError,
+  NotFoundError,
+  ConflictError,
+  ServerError,
 };

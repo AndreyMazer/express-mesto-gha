@@ -10,6 +10,12 @@
   
 Остальные директории вспомогательные, создаются при необходимости разработчиком
 
+## Сделано с помощью:
+![Express](https://img.shields.io/badge/-Express-090909?style=for-the-badge&logo=Express)
+![Node.js](https://img.shields.io/badge/-Node.js-090909?style=for-the-badge&logo=Node.js)
+![MongoDB](https://img.shields.io/badge/-MongoDB-090909?style=for-the-badge&logo=MongoDB)
+![Postman](https://img.shields.io/badge/-Postman-090909?style=for-the-badge&logo=Postman)
+
 ## Запуск проекта
 
 `npm run start` — запускает сервер   
