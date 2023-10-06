@@ -1,15 +1,15 @@
-const router = require("express").Router();
-const { celebrate, Joi } = require("celebrate");
-const userRouter = require("./users");
-const cardRouter = require("./cards");
-const NotFoundError = require("../errors/notFoundError");
-const { URL_VALIDATE } = require("../data/constants");
-const auth = require("../middlewares/auth");
+const router = require('express').Router();
+const { celebrate, Joi } = require('celebrate');
+const userRouter = require('./users');
+const cardRouter = require('./cards');
+const NotFoundError = require('../errors/notFoundError');
+const { URL_VALIDATE } = require('../data/constants');
+const auth = require('../middlewares/auth');
 
-const { createUser, login } = require("../controllers/users");
+const { createUser, login } = require('../controllers/users');
 
 router.post(
-  "/signup",
+  '/signup',
   celebrate({
     body: Joi.object().keys({
       email: Joi.string().email().required(),
@@ -19,22 +19,22 @@ router.post(
       avatar: Joi.string().regex(URL_VALIDATE),
     }),
   }),
-  createUser
+  createUser,
 );
 router.post(
-  "/signin",
+  '/signin',
   celebrate({
     body: Joi.object().keys({
       email: Joi.string().email().required(),
       password: Joi.string().required(),
     }),
   }),
-  login
+  login,
 );
-router.use("/users", auth, userRouter);
-router.use("/cards", auth, cardRouter);
-router.use("*", auth, (req, res, next) => {
-  next(new NotFoundError("Введены некорректные данные"));
+router.use('/users', auth, userRouter);
+router.use('/cards', auth, cardRouter);
+router.use('*', auth, (req, res, next) => {
+  next(new NotFoundError('Введены некорректные данные'));
 });
 
 module.exports = router;
